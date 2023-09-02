@@ -2,6 +2,8 @@ $(document).ready(function() {
     
     const firstName = $('#firstName');
     const lastName = $('#lastName');
+    const username = $('#username');
+    let usernameChanged = false;
 
 
     firstName.focusout(function() {
@@ -15,6 +17,7 @@ $(document).ready(function() {
         }else{
             firstName.removeClass('is-invalid');
             $('#firstName+div').text('').removeClass('invalid-feedback');
+            generateUsername();
         }
     });
 
@@ -29,7 +32,39 @@ $(document).ready(function() {
         }else{
             lastName.removeClass('is-invalid');
             $('#lastName+div').text('').removeClass('invalid-feedback');
+            generateUsername();
         }
     })
+
+    username.on('focusout', () =>{
+
+        let regEx = /^[A-z0-9]+_[A-z0-9]$/;
+
+        if(username.val() == '') {
+            username.addClass('is-invalid');
+            $('#username+div').text('Username can\'t be empty').addClass('invalid-feedback');
+        }else if(!regEx.test(username.val())){
+            username.addClass('is-invalid');
+            $('#username+div').text('Username pattern wrong').addClass('invalid-feedback');
+        }else{
+            username.removeClass('is-invalid').addClass('is-valid');
+            $('#username+div').text('').removeClass('invalid-feedback');
+
+            usernameChanged = true
+        }
+    })
+
+    function generateUsername (){
+        if(firstName.val().length > 3 && lastName.val().length > 3){ 
+            let usernameVal = firstName.val() + '_' + lastName.val().charAt(0)
+            usernameVal = usernameVal.toLowerCase();
+            console.log(usernameVal);
+            if(username.val() == "" || !usernameChanged){
+                username.val(usernameVal);
+            }
+            username.removeClass('is-invalid').addClass('is-valid');
+            $('#username+div').text('').removeClass('invalid-feedback');
+        }
+    }
 
 })
