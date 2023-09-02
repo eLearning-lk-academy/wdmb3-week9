@@ -67,4 +67,36 @@ $(document).ready(function() {
         }
     }
 
+    $('#nextBtn').click(()=>{
+        let step = $('#regForm').data('step')
+        
+        $('#step_'+step).slideUp(800);
+        // $('#step_'+step).slideUp(2000);
+        step++
+        $('#step_'+step).slideDown(800)
+        $('#regForm').data('step', step)
+        $('#preBtn').show();
+        if(step >=3){
+            $('#nextBtn').hide();
+            $('#subBtn').show();
+        }
+
+    })
+
+    $('#preBtn').click(()=>{
+        let step = $('#regForm').data('step');
+        
+        $('#step_'+step).slideUp(800);
+        step--
+        $('#step_'+step).slideDown(800)
+        $('#regForm').data('step', step)
+
+        $('#nextBtn').show();
+        $('#subBtn').hide();
+        
+        if(step == 1 ){
+            $('#preBtn').hide();
+        }
+    })
+
 })
